@@ -1,0 +1,40 @@
+{
+  "name": "Airport Origins Dashboard - Light",
+  "dataColors": [
+    "#1A6FBF",
+    "#C93B3B",
+    "#E07B1A",
+    "#2EA06E",
+    "#7B52C7",
+    "#C4447E",
+    "#3A9BB8",
+    "#B87D14",
+    "#5B8C28",
+    "#5A6472"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#0B1826",
+  "tableAccent": "#1A6FBF",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Segoe UI",
+      "color": "#0B1826",
+      "fontSize": 45
+    },
+    "title": {
+      "fontFace": "Segoe UI",
+      "color": "#0B1826",
+      "fontSize": 14
+    },
+    "header": {
+      "fontFace": "Segoe UI",
+      "color": "#142234",
+      "fontSize": 12
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "color": "#4A6280",
+      "fontSize": 11
+    }
+  }
+}

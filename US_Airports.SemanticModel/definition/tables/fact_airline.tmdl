@@ -1,0 +1,212 @@
+table fact_airline
+	lineageTag: 889df946-4f87-4dbc-83c8-c45e66020067
+
+	column 'Flight Number'
+		dataType: string
+		lineageTag: fdb2aa80-c275-4673-9a18-673afc19b626
+		summarizeBy: none
+		sourceColumn: Flight Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Origin
+		dataType: string
+		lineageTag: 79469231-313a-49e0-b6e6-6ba468024cf4
+		summarizeBy: none
+		sourceColumn: Origin
+
+		annotation SummarizationSetBy = Automatic
+
+	column Destination
+		dataType: string
+		lineageTag: 8dea7aa0-2fda-46ab-8303-38508fd32379
+		summarizeBy: none
+		sourceColumn: Destination
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Departure Time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 65f594a7-890e-46f3-9658-bc628862e13a
+		summarizeBy: none
+		sourceColumn: Departure Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Arrival Time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5dbf7c3c-c6b9-4844-ad9c-6603a2f6a2c7
+		summarizeBy: none
+		sourceColumn: Arrival Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Delay (min)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 44b965ad-fbe2-478a-a34a-b8d91bc6b56d
+		summarizeBy: sum
+		sourceColumn: Delay (min)
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cancelled
+		dataType: string
+		lineageTag: 348ebc97-fa3e-4685-b2b9-2e4cdd37e732
+		summarizeBy: none
+		sourceColumn: Cancelled
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Passenger Age'
+		dataType: int64
+		formatString: 0
+		lineageTag: e84ebd98-72ff-4147-929f-a3b4636f0a33
+		summarizeBy: sum
+		sourceColumn: Passenger Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Passenger Gender'
+		dataType: string
+		lineageTag: 70eb5a49-8a06-47f0-8046-93808d54b146
+		summarizeBy: none
+		sourceColumn: Passenger Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ticket Class'
+		dataType: string
+		lineageTag: 5625dcda-f630-4b95-b7dc-ec786b177e99
+		summarizeBy: none
+		sourceColumn: Ticket Class
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Satisfaction Score'
+		dataType: double
+		lineageTag: 051c1480-47ae-453f-8d04-3f9875ed677b
+		summarizeBy: sum
+		sourceColumn: Satisfaction Score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Ticket Price'
+		dataType: double
+		lineageTag: a864515c-a6fe-4655-8c9b-54299e631dd3
+		summarizeBy: sum
+		sourceColumn: Ticket Price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Ancillary Revenue'
+		dataType: double
+		lineageTag: 3cd67eb6-1641-4322-b5dc-adef2f13bfc8
+		summarizeBy: sum
+		sourceColumn: Ancillary Revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fuel Cost (per plane)'
+		dataType: double
+		lineageTag: 963af443-1b81-4fa8-a402-ee88c2c17668
+		summarizeBy: sum
+		sourceColumn: Fuel Cost (per plane)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Profit (original)'
+		dataType: double
+		lineageTag: 4dbe96a9-dd54-4237-8ee9-9b59037277a8
+		summarizeBy: sum
+		sourceColumn: Profit (original)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Flight Time'
+		dataType: double
+		lineageTag: 942324bb-7a4e-4347-bb7f-53160420504a
+		summarizeBy: sum
+		sourceColumn: Flight Time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fuel Cost/Seat'
+		dataType: double
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: ad8e1d79-addf-4b84-955a-71b25c972624
+		summarizeBy: sum
+		sourceColumn: Fuel Cost/Seat
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	column 'Age Bracket'
+		dataType: string
+		lineageTag: 6d3920d8-70b5-4ccf-a584-4c3e36f3010c
+		summarizeBy: none
+		sourceColumn: Age Bracket
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: c165c82c-dfcf-4a3c-b8e2-02e462fe0ea5
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_airline = m
+		mode: import
+		source = ```
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\MatejAdamecBlueleaf\OneDrive - Blueleaf Care\Documents\Matej Doc\Project_Airports\airline_case_study_data.csv"),[Delimiter=",", Columns=15, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Flight Number", type text}, {"Origin", type text}, {"Destination", type text}, {"Departure Time", type datetime}, {"Arrival Time", type datetime}, {"Delay (min)", Int64.Type}, {"Cancelled", type logical}, {"Passenger Age", Int64.Type}, {"Passenger Gender", type text}, {"Ticket Class", type text}, {"Satisfaction Score", type number}, {"Ticket Price", type number}, {"Ancillary Revenue", type number}, {"Fuel Cost", type number}, {"Profit", type number}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "Flight Time", each Duration.TotalMinutes([Arrival Time] - [Departure Time])),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"Flight Time", type number}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type1", "Fuel Cost/Seat", each Value.Divide([Fuel Cost], 180)),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom1",{{"Fuel Cost/Seat", Currency.Type}}),
+				    #"Added Custom2" = Table.AddColumn(#"Changed Type2", "Age Bracket", each if [Passenger Age] < 18 then "Under 18"
+				else if [Passenger Age] < 35 then "18-34"
+				else if [Passenger Age] < 50 then "35-49"
+				else "50+"),
+				    #"Added Custom3" = Table.AddColumn(#"Added Custom2", "DateKey", each Int64.From(Date.ToText(Date.From([Departure Time]), "yyyyMMdd")), Int64.Type),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom3",{{"Fuel Cost", "Fuel Cost (per plane)"}, {"Profit", "Profit (original)"}}),
+				    #"Added Custom4" = Table.AddColumn(#"Renamed Columns", "Zone", each Table.AddColumn(#"Renamed Columns", "Zone", each 
+				    if [Origin] = "SEA" or [Origin] = "SFO" or [Origin] = "LAX" then "West Coast"
+				    else if [Origin] = "DEN" or [Origin] = "DFW" then "Central"
+				    else if [Origin] = "ORD" or [Origin] = "ATL" then "Midwest"
+				    else if [Origin] = "MIA" then "Southeast"
+				    else if [Origin] = "JFK" or [Origin] = "BOS" then "Northeast"
+				    else "Unknown"
+				)),
+				    Zone = #"Added Custom4"{0}[Zone],
+				    #"Changed Type3" = Table.TransformColumnTypes(Zone,{{"Fuel Cost/Seat", type number}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type3",{"Zone"}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Removed Columns",{{"Cancelled", type text}})
+				in
+				    #"Changed Type4"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

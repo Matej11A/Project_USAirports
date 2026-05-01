@@ -1,0 +1,377 @@
+table _Measures
+	lineageTag: 8c26542f-84cf-4849-9663-8987396a1a00
+
+	measure 'Ancillary Revenue' = SUM('fact_airline'[Ancillary Revenue])
+		lineageTag: adb09add-db76-41f9-85f1-0ac47a68dc4b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ticket Revenue' = SUM('fact_airline'[Ticket Price])
+		lineageTag: 0e514f28-84e9-4903-864f-e3896b26803f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Fuel Cost/Seat' = SUM(fact_airline[Fuel Cost/Seat])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 0a0b6e14-8459-43f9-a7fa-56174117ac58
+
+	measure 'Total Revenue' = [Ticket Revenue] + [Ancillary Revenue]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: a0efaab6-158f-4dfb-83eb-1e9694be4a8b
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Gross Profit' = [Total Revenue] - [Fuel Cost/Seat]
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: fb2ee019-b6cf-4c6f-a79f-296993aca1ef
+
+	measure 'Gross Margin' =
+			DIVIDE(
+			    [Gross Profit],
+			    [Total Revenue]
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: dc8e201a-4b21-4dfb-97c1-ce405e4a6454
+
+	measure 'Total Revenue QonQ' = ```
+			CALCULATE(
+			    [Total Revenue], 
+			    PREVIOUSQUARTER('dim_date'[Date])
+			)
+			```
+		lineageTag: c2512bc2-f7a2-46bc-b225-3e4234b6cf0a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gross Profit QonQ' =
+			CALCULATE(
+			    [Gross Profit],
+			    PREVIOUSQUARTER('dim_date'[Date])
+			)
+		lineageTag: c321dcec-3ed3-4ec1-a400-b1073ed91362
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Revenue Q Difference' =
+			IF(
+			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
+			    [Total Revenue] - [Total Revenue QonQ]
+			)
+		lineageTag: e60d4ec3-67c9-4597-89fe-5a0c2e919e3c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Departures = COUNT('fact_airline'[Flight Number])
+		formatString: 0
+		lineageTag: 4fbbd2c0-3c73-470a-b124-18a77da431fe
+
+	measure 'AVR Delay (min)' = AVERAGE(fact_airline[Delay (min)])
+		lineageTag: 4a12bc54-a14c-4ea6-b10d-fcb4cd9a0a8f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Cancelled =
+			CALCULATE(
+			    [Departures],
+			    'fact_airline'[Cancelled] = "true"
+			)
+		formatString: 0
+		lineageTag: fa6b1baa-e783-4d6c-87bb-2610d47be6ad
+
+	measure On-Time =
+			CALCULATE(
+			    [Departures],
+			    'fact_airline'[Delay (min)] = 0
+			)
+		formatString: 0
+		lineageTag: 9d64b340-534f-47e4-9976-3f187994d45e
+
+	measure 'On-Time Rate' =
+			DIVIDE(
+			    [On-Time],
+			    [Departures]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 9da03da8-561d-4874-8eff-06369c841a5c
+
+	measure 'AVR Satisfaction' = AVERAGE('fact_airline'[Satisfaction Score])
+		lineageTag: 880a7952-01c4-47fa-9eb0-4ab7c57d8c0d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Revenue QonQ %' =
+			DIVIDE(
+			    [Total Revenue Q Difference],
+			    [Total Revenue QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 77b68751-1edb-4b8e-9930-d0642e38463f
+
+	measure 'Fuel Cost QonQ' = ```
+			CALCULATE(
+			    [Fuel Cost/Seat], 
+			    PREVIOUSQUARTER('dim_date'[Date])
+			)
+			```
+		lineageTag: 65c2c6c1-f0e8-490a-b218-4acae27d32fb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gross Margin QonQ' = ```
+			CALCULATE(
+			    [Gross Margin], 
+			    PREVIOUSQUARTER('dim_date'[Date])
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 51d45074-be2c-4078-9b48-8d7de8f6654f
+
+	measure 'Fuel Cost Q Difference' =
+			IF(
+			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
+			    [Fuel Cost/Seat] - [Fuel Cost QonQ]
+			)
+		lineageTag: b461ff1e-3194-4975-b5e1-0d610fdee5f9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gross Profit Q Difference' =
+			IF(
+			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
+			    [Gross Profit] - [Gross Profit QonQ]
+			)
+		lineageTag: 210abbf9-ca81-4a1d-bfd3-dac2c4121cfa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gross Margin Q Difference' =
+			IF(
+			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
+			    [Gross Margin] - [Gross Margin QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 009c848c-3b7c-4b0a-a2c3-b1fdf7073ddb
+
+	measure 'Fuel Cost QonQ %' =
+			DIVIDE(
+			    [Fuel Cost Q Difference],
+			    [Fuel Cost QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 213c090d-fcb8-4e33-9569-4c2225fe0626
+
+	measure 'Gross Profit QonQ %' =
+			DIVIDE(
+			    [Gross Profit Q Difference],
+			    [Gross Profit QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 40a305fc-7eb7-4720-9c89-cb6025ebc956
+
+	measure 'Selected Class' =
+			
+			IF(
+			    ISFILTERED('fact_airline'[Ticket Class]),
+			    CONCATENATEX(VALUES('fact_airline'[Ticket Class]), 'fact_airline'[Ticket Class], " · "),
+			    "All Classes"
+			)
+		lineageTag: 1d52e4e9-af80-415c-a0fd-fefe2252143b
+
+	measure 'Selected Gender' =
+			
+			IF(
+			    ISFILTERED('fact_airline'[Passenger Gender]),
+			    CONCATENATEX(VALUES('fact_airline'[Passenger Gender]), 'fact_airline'[Passenger Gender], " · "),
+			    "All Genders"
+			)
+		lineageTag: 083801c5-cd48-47e9-a10c-02d76f179be6
+
+	measure 'Selected Age' =
+			
+			IF(
+			    ISFILTERED('fact_airline'[Age Bracket]),
+			    CONCATENATEX(VALUES('fact_airline'[Age Bracket]), 'fact_airline'[Age Bracket], " · "),
+			    "All Age Brackets"
+			)
+		lineageTag: 40b1a478-d6f5-4c9b-8249-8d0161f8b7e2
+
+	measure 'Selected Quarter' =
+			
+			IF(
+			    ISFILTERED('dim_date'[Quarter]),
+			    "Q" & CONCATENATEX(VALUES('dim_date'[Quarter]), 'dim_date'[Quarter], " · Q"),
+			    "All Quarters"
+			)
+		lineageTag: 36779390-1c51-44cf-b16b-a44eab73926a
+
+	measure 'Active Filters Label' =
+			
+			"Filtered by: " &
+			    [Selected Class] & "  |  " &
+			    [Selected Gender]   & "  |  " &
+			    [Selected Age] & "  |  " &
+			    [Selected Quarter]
+		lineageTag: b884e91f-4509-4a00-95fa-7262b4f42fac
+
+	measure 'Active Filter Count' =
+			
+			VAR _class   = IF(ISFILTERED('fact_airline'[Ticket Class]),   1, 0)
+			VAR _gender  = IF(ISFILTERED('fact_airline'[Passenger Gender]),  1, 0)
+			VAR _age     = IF(ISFILTERED('fact_airline'[Age Bracket]),     1, 0)
+			VAR _quarter = IF(ISFILTERED('dim_date'[Quarter]),       1, 0)
+			RETURN
+			    "# Filters:" &" " &_class + _gender + _age + _quarter
+		lineageTag: 779e8426-b607-4fd4-9f7c-3f5accb9435b
+
+	measure 'AVR Flight Time (min)' = AVERAGE('fact_airline'[Flight Time])
+		formatString: 0
+		lineageTag: fc0a1ac2-3384-4fc9-80de-346b8885e016
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Flight Time' = SUM('fact_airline'[Flight Time])
+		lineageTag: 6010e32b-f251-4d55-bb9c-c9518a821d7a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Departures QonQ' =
+			CALCULATE(
+			    [Departures],
+			    PREVIOUSQUARTER('dim_date'[Date])
+			)
+		formatString: 0
+		lineageTag: 8c388a48-26b5-46ae-9749-45ff94e9b94a
+
+	measure 'AVR Flight Time QonQ' =
+			CALCULATE(
+			    [AVR Flight Time (min)],
+			    PREVIOUSQUARTER('dim_date'[Date])
+			)
+		lineageTag: 7bb0e1ff-2d02-49f3-9eb7-290d19cdc1d0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'On-Time Rate QonQ' =
+			CALCULATE(
+			    [On-Time Rate],
+			    PREVIOUSQUARTER('dim_date'[Date])
+			)
+		lineageTag: 7ba4a12c-d53e-47e0-966e-0cdbb318f7c2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVR Delay QonQ' =
+			CALCULATE(
+			    [AVR Delay (min)],
+			    PREVIOUSQUARTER('dim_date'[Date])
+			)
+		lineageTag: 3187d600-9505-4b18-be30-96e13a96c22c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cancelled QonQ' =
+			CALCULATE(
+			    [Cancelled],
+			    PREVIOUSQUARTER('dim_date'[Date])
+			)
+		formatString: 0
+		lineageTag: 577b6090-1113-430a-ba68-f9264574143e
+
+	measure 'Departures Q Difference' =
+			IF(
+			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
+			    [Departures] - [Departures QonQ]
+			)
+		formatString: 0
+		lineageTag: a12296fb-3d73-4ce6-9a5e-e9af5f443c81
+
+	measure 'AVR Flight Time Q Difference' =
+			IF(
+			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
+			    [AVR Flight Time (min)] - [AVR Flight Time QonQ]
+			)
+		lineageTag: 54c26aa8-9a2a-4fed-952a-83f85cada86a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'On-Time Rate Q Difference' =
+			IF(
+			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
+			    [On-Time Rate] - [On-Time Rate QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 45953590-af56-4237-a0a7-6570e567937d
+
+	measure 'AVR Delay Q Difference' =
+			IF(
+			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
+			    [AVR Delay (min)] - [AVR Delay QonQ]
+			)
+		lineageTag: f4a56668-be84-4c63-8eb6-dae9b18dd244
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cancelled Q Difference' =
+			IF(
+			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
+			    [Cancelled] - [Cancelled QonQ]
+			)
+		formatString: 0
+		lineageTag: 6317589f-86db-4d32-9fcd-13672f6928b1
+
+	measure 'Departures QonQ %' =
+			DIVIDE(
+			    [Departures Q Difference],
+			    [Departures QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 9218c068-6721-4efc-940f-a065c82e9d39
+
+	measure 'AVR Flight Time QonQ %' =
+			DIVIDE(
+			    [AVR Flight Time Q Difference],
+			    [AVR Flight Time QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 944b6398-e0ea-4d89-86c8-b540f45a0ee7
+
+	measure 'On-Time Rate QonQ %' =
+			DIVIDE(
+			    [On-Time Rate Q Difference],
+			    [On-Time Rate QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 99c9230b-1e2e-4a6e-9c86-219db8f2814d
+
+	measure 'AVR Delay QonQ %' =
+			DIVIDE(
+			    [AVR Delay Q Difference],
+			    [AVR Delay QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: eef46cc9-ccf6-421f-966a-bce936423301
+
+	measure 'Cancelled QonQ %' =
+			DIVIDE(
+			    [Cancelled Q Difference],
+			    [Cancelled QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: a09357e1-9f39-4580-8020-eeef2dac29cb
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: 6dfb47ce-f548-4d34-82f5-f0ebda12cbb5
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 1f46064d9aff4aa8bc2235157dad125d
+

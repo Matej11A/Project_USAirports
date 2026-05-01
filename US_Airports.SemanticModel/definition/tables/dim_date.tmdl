@@ -1,0 +1,198 @@
+table dim_date
+	lineageTag: ec8af6d2-ba90-4d4f-ad34-e75a71bad2f4
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: a06fedc5-54ea-486a-8308-7f84e091eaf7
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 9e2c0e24-f90e-42d0-bdd5-967e190b79d5
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f814c99-fc48-4569-84cd-1ef147b1c08a
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: 8b44463f-f7e4-43ea-b1ad-ba42ff99acfb
+		summarizeBy: none
+		sourceColumn: Month Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column MMM
+		dataType: string
+		lineageTag: 002678a8-92c4-4139-8da8-dfd0c9fba479
+		summarizeBy: none
+		sourceColumn: MMM
+		sortByColumn: Month
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column M
+		dataType: string
+		lineageTag: 6f2ca6bf-04fd-4241-9986-fd2050019d75
+		summarizeBy: none
+		sourceColumn: M
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6b60ab0c-d90e-44ef-bb16-72dfb01c2b61
+		summarizeBy: none
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Name'
+		dataType: string
+		lineageTag: b3745156-ed03-4ded-9433-ccbdf580846a
+		summarizeBy: none
+		sourceColumn: Day Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column DDD
+		dataType: string
+		lineageTag: cd542b56-6fed-474c-b37c-36ade281794f
+		summarizeBy: none
+		sourceColumn: DDD
+
+		annotation SummarizationSetBy = Automatic
+
+	column D
+		dataType: string
+		lineageTag: 03cf84ab-4e90-4862-a888-8152498a12af
+		summarizeBy: none
+		sourceColumn: D
+
+		annotation SummarizationSetBy = Automatic
+
+	column YYMM
+		dataType: int64
+		formatString: 0
+		lineageTag: a490585f-4858-47a2-a1bb-f5fe8065e700
+		summarizeBy: none
+		sourceColumn: YYMM
+
+		annotation SummarizationSetBy = Automatic
+
+	column MMMYY
+		dataType: string
+		lineageTag: bf8bd45e-5ea2-499f-a830-bd9d029e17ef
+		summarizeBy: none
+		sourceColumn: MMMYY
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthID
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e6e2f14-ecaa-4303-b06f-700f86efdc73
+		summarizeBy: none
+		sourceColumn: MonthID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 50f3dc2e-79c3-4c6e-8ed5-be740f6f9575
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: e62b18be-2695-400c-9359-1b142eb20a3b
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week = WEEKNUM('dim_date'[Date])
+		formatString: 0
+		lineageTag: aca965e0-ce83-4724-9d63-1156c524fa16
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_date = m
+		mode: import
+		source = ```
+				let
+				    StartDate = #date(2023, 1, 1),
+				    Today = Date.From( DateTimeZone.SwitchZone( DateTimeZone.UtcNow(), 10) ),
+				    EndDate = Date.EndOfYear( Date.AddYears( Today, 0) ),
+				    Length = Duration.Days( EndDate - StartDate ) + 1,
+				    Source = List.Dates(StartDate, Length, #duration(1,0,0,0)),
+				    #"Converted to Table" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+				    #"Renamed Columns" = Table.RenameColumns(#"Converted to Table",{{"Column1", "Date"}}),
+				    #"Added DateKey" = Table.AddColumn(#"Renamed Columns", "DateKey", each Int64.From(Date.ToText([Date], "yyyyMMdd")), Int64.Type),
+				    #"Inserted Year" = Table.AddColumn(#"Added DateKey", "Year", each Date.Year([Date]), Int64.Type),
+				    #"Inserted Month" = Table.AddColumn(#"Inserted Year", "Month", each Date.Month([Date]), Int64.Type),
+				    #"Inserted Month Name" = Table.AddColumn(#"Inserted Month", "Month Name", each Date.MonthName([Date]), type text),
+				    #"Inserted MMM" = Table.AddColumn(#"Inserted Month Name", "MMM", each Text.Start([Month Name], 3), type text),
+				    
+				    #"Inserted M Month" = Table.AddColumn(#"Inserted MMM", "M", each Text.Start([MMM], 1) & Text.Repeat(Character.FromNumber(8203), [Month]), type text),
+				    
+				    #"Inserted Day of Week" = Table.AddColumn(#"Inserted M Month", "Day of Week", each Date.DayOfWeek([Date], Day.Monday)+1, Int64.Type),
+				    #"Inserted Day Name" = Table.AddColumn(#"Inserted Day of Week", "Day Name", each Date.DayOfWeekName([Date]), type text),
+				    #"Inserted DDD" = Table.AddColumn(#"Inserted Day Name", "DDD", each Text.Start([Day Name], 3), type text),
+				    #"Inserted D Day" = Table.AddColumn(#"Inserted DDD", "D", each Text.Start([DDD], 1) & Text.Repeat(Character.FromNumber(8203), [Day of Week]), type text),
+				    #"Inserted YYMM" = Table.AddColumn(#"Inserted D Day", "YYMM", each (Date.Year([Date]) * 100) + Date.Month([Date]), Int64.Type),
+				    #"Inserted MMMYY" = Table.AddColumn(#"Inserted YYMM", "MMMYY", each [MMM] & " " & Text.End(Text.From(Date.Year([Date])), 2), type text),
+				    #"Added MonthID" = Table.AddColumn(#"Inserted MMMYY", "MonthID", each (Date.Year([Date]) - Date.Year(StartDate))*12 + Date.Month([Date]), Int64.Type),
+				    #"Added Quarter" = Table.AddColumn(#"Added MonthID", "Quarter", each Date.QuarterOfYear([Date]), Int64.Type),
+				
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Quarter",{
+				        {"Date", type date}, 
+				        {"DateKey", Int64.Type},
+				        {"Year", Int64.Type}, 
+				        {"Month", Int64.Type}, 
+				        {"Month Name", type text}, 
+				        {"MMM", type text}, 
+				        {"M", type text}, 
+				        {"Day of Week", Int64.Type}, 
+				        {"Day Name", type text}, 
+				        {"DDD", type text}, 
+				        {"D", type text}, 
+				        {"YYMM", Int64.Type}, 
+				        {"MMMYY", type text}, 
+				        {"MonthID", Int64.Type}, 
+				        {"Quarter", Int64.Type}
+				    })
+				in
+				    #"Changed Type"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

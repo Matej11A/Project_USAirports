@@ -1,0 +1,128 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.2.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY26SU04",
+      "reportVersionAtImport": {
+        "visual": "2.8.0",
+        "report": "3.2.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Airport_Origins_Dashboard_-_Li5997891164831123.json",
+      "reportVersionAtImport": {
+        "visual": "2.8.0",
+        "report": "3.2.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY26SU04",
+          "path": "BaseThemes/CY26SU04.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "3d-background-blue-3840x2160-16413790587700167.jpg",
+          "path": "3d-background-blue-3840x2160-16413790587700167.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "air-transport8488914509294753.png",
+          "path": "air-transport8488914509294753.png",
+          "type": "Image"
+        },
+        {
+          "name": "Airport_Origins_Dashboard_-_Li5997891164831123.json",
+          "path": "Airport_Origins_Dashboard_-_Li5997891164831123.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "gear-328166657927710119.png",
+          "path": "gear-328166657927710119.png",
+          "type": "Image"
+        },
+        {
+          "name": "rect_vertical_verylong6394062354245029.png",
+          "path": "rect_vertical_verylong6394062354245029.png",
+          "type": "Image"
+        },
+        {
+          "name": "rect1935437034528533.png",
+          "path": "rect1935437034528533.png",
+          "type": "Image"
+        },
+        {
+          "name": "revenue3350605448258207.png",
+          "path": "revenue3350605448258207.png",
+          "type": "Image"
+        },
+        {
+          "name": "revenue6829983935155063.png",
+          "path": "revenue6829983935155063.png",
+          "type": "Image"
+        },
+        {
+          "name": "target-audience-4826177633833870106.png",
+          "path": "target-audience-4826177633833870106.png",
+          "type": "Image"
+        },
+        {
+          "name": "target-audience-488408244402412544.png",
+          "path": "target-audience-488408244402412544.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

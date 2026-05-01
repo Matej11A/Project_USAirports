@@ -1,0 +1,85 @@
+table dim_geoData
+	lineageTag: e1a498c6-7ddb-4e25-8136-20fa53cd5a26
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 8bf143d4-e4e3-4c00-8948-835a00780c46
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Airport
+		dataType: string
+		lineageTag: 88b94da3-bfa9-48b5-91bd-95a549b1311a
+		summarizeBy: none
+		sourceColumn: Airport
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 4dca7af8-3496-4323-89bf-6832f938e8da
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: double
+		lineageTag: 31140f1a-ce8e-497e-9059-f66114b92dec
+		dataCategory: Latitude
+		summarizeBy: none
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude
+		dataType: double
+		lineageTag: 31a5bafb-e2db-4f36-b8fe-7f77defeae2d
+		dataCategory: Longitude
+		summarizeBy: none
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Region
+		dataType: string
+		lineageTag: 7138d65e-b4b1-4365-8eb1-906042d74fb4
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Geo hierarchy
+	/// 
+	hierarchy 'Region Hierarchy'
+		lineageTag: 439d2c5c-2554-4f9d-8b8a-31c5ab7a5fc5
+
+		level Region
+			lineageTag: ac246c34-bd06-4a98-9404-d83994cd6ab5
+			column: Region
+
+		level City
+			lineageTag: 169878c9-6346-4af1-a080-89ccb9589a29
+			column: City
+
+	partition dim_geoData = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\MatejAdamecBlueleaf\OneDrive - Blueleaf Care\Documents\Matej Doc\Project_USAirports\Geo_data.csv"),[Delimiter=",", Columns=6, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Airport", type text}, {"City", type text}, {"Latitude", type number}, {"Longitude", type number}, {"Region", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

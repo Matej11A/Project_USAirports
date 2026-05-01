@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "US_Airports"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8f0109ed-4417-4a85-b93b-1e4cb4dd2b7b"
+  }
+}

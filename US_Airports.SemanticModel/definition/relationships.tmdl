@@ -1,0 +1,13 @@
+relationship AutoDetected_7b75b373-3197-4e22-b613-1bbae3ddc7f4
+	fromColumn: fact_airline.DateKey
+	toColumn: dim_date.DateKey
+
+relationship 83c8c871-7426-1158-4e5e-f4705dfdd6a2
+	fromColumn: fact_airline.Origin
+	toColumn: dim_geoData.Airport
+
+relationship 54dc8cc1-86a8-a8bb-0f07-c2a160c89299
+	isActive: false
+	fromColumn: fact_airline.Destination
+	toColumn: dim_geoData.Airport
+

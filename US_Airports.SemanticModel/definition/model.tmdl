@@ -1,0 +1,21 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["fact_airline","dim_date","dim_geoData"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table fact_airline
+ref table dim_date
+ref table _Measures
+ref table dim_geoData
+
+ref cultureInfo en-US
+
