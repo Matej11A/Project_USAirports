@@ -4,10 +4,10 @@
   "position": {
     "x": 91.701492537313428,
     "y": 114.6268656716418,
-    "z": 16000,
+    "z": 15000,
     "height": 154.10945273631842,
     "width": 1159.004975124378,
-    "tabOrder": 20001
+    "tabOrder": 13000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.Departures",
-              "nativeQueryRef": "Departures"
+              "nativeQueryRef": "Flights",
+              "displayName": "Flights"
             },
             {
               "field": {

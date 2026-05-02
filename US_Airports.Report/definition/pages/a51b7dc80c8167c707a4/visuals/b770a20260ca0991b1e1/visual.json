@@ -4,10 +4,10 @@
   "position": {
     "x": 9.7133220910623947,
     "y": 414.43507588532884,
-    "z": 19005,
+    "z": 22000,
     "height": 45.328836424957842,
     "width": 52.883642495784152,
-    "tabOrder": 20011
+    "tabOrder": 22000
   },
   "visual": {
     "visualType": "image",
@@ -97,6 +97,42 @@
           },
           "selector": {
             "id": "default"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "visualLink": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'PageNavigation'"
+                }
+              }
+            },
+            "navigationSection": {
+              "expr": {
+                "Literal": {
+                  "Value": "'54a1f9898d0688baeb05'"
+                }
+              }
+            },
+            "tooltip": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Customer Profile'"
+                }
+              }
+            }
           }
         }
       ]

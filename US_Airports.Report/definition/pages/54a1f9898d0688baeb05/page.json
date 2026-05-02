@@ -1,0 +1,104 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "54a1f9898d0688baeb05",
+  "displayName": "Customer",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "''"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "Literal": {
+                    "Value": "''"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "75D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'3d-background-blue-3840x2160-10876.jpg'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "3d-background-blue-3840x2160-16413790587700167.jpg"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "55D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "6a3c0e9ba1922128dd85",
+      "target": "e1b7a9da01de1016d09c",
+      "type": "DataFilter"
+    },
+    {
+      "source": "09b310f040c8b7779cc1",
+      "target": "e1b7a9da01de1016d09c",
+      "type": "DataFilter"
+    },
+    {
+      "source": "e1b7a9da01de1016d09c",
+      "target": "09b310f040c8b7779cc1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "e1b7a9da01de1016d09c",
+      "target": "b123d41a84bc5dce370d",
+      "type": "DataFilter"
+    }
+  ]
+}

@@ -82,6 +82,9 @@ table fact_airline
 		lineageTag: 5625dcda-f630-4b95-b7dc-ec786b177e99
 		summarizeBy: none
 		sourceColumn: Ticket Class
+		sortByColumn: SortClass
+
+		changedProperty = SortByColumn
 
 		annotation SummarizationSetBy = Automatic
 
@@ -173,6 +176,15 @@ table fact_airline
 
 		annotation SummarizationSetBy = Automatic
 
+	column SortClass
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a43444c-ac16-4d6f-b7a8-300868cd8eb4
+		summarizeBy: sum
+		sourceColumn: SortClass
+
+		annotation SummarizationSetBy = Automatic
+
 	partition fact_airline = m
 		mode: import
 		source = ```
@@ -185,9 +197,13 @@ table fact_airline
 				    #"Added Custom1" = Table.AddColumn(#"Changed Type1", "Fuel Cost/Seat", each Value.Divide([Fuel Cost], 180)),
 				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom1",{{"Fuel Cost/Seat", Currency.Type}}),
 				    #"Added Custom2" = Table.AddColumn(#"Changed Type2", "Age Bracket", each if [Passenger Age] < 18 then "Under 18"
-				else if [Passenger Age] < 35 then "18-34"
-				else if [Passenger Age] < 50 then "35-49"
-				else "50+"),
+				else if [Passenger Age] < 29 then "18-29"
+				else if [Passenger Age] < 39 then "30-39"
+				else if [Passenger Age] < 49 then "40-49"
+				else if [Passenger Age] < 59 then "50-59"
+				else if [Passenger Age] < 69 then "60-69"
+				else if [Passenger Age] < 79 then "70-79"
+				else "80+"),
 				    #"Added Custom3" = Table.AddColumn(#"Added Custom2", "DateKey", each Int64.From(Date.ToText(Date.From([Departure Time]), "yyyyMMdd")), Int64.Type),
 				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom3",{{"Fuel Cost", "Fuel Cost (per plane)"}, {"Profit", "Profit (original)"}}),
 				    #"Added Custom4" = Table.AddColumn(#"Renamed Columns", "Zone", each Table.AddColumn(#"Renamed Columns", "Zone", each 
@@ -201,9 +217,15 @@ table fact_airline
 				    Zone = #"Added Custom4"{0}[Zone],
 				    #"Changed Type3" = Table.TransformColumnTypes(Zone,{{"Fuel Cost/Seat", type number}}),
 				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type3",{"Zone"}),
-				    #"Changed Type4" = Table.TransformColumnTypes(#"Removed Columns",{{"Cancelled", type text}})
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Removed Columns",{{"Cancelled", type text}}),
+				    #"Added Custom5" = Table.AddColumn(#"Changed Type4", "SortClass", each if [Ticket Class] = "Economy"         then 1
+				        else if [Ticket Class] = "Premium Economy" then 2
+				        else if [Ticket Class] = "Business"   then 3
+				        else if [Ticket Class] = "First"      then 4
+				        else null),
+				    #"Changed Type5" = Table.TransformColumnTypes(#"Added Custom5",{{"SortClass", Int64.Type}})
 				in
-				    #"Changed Type4"
+				    #"Changed Type5"
 				```
 
 	annotation PBI_NavigationStepName = Navigation

@@ -2,9 +2,9 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "99018397368d7d811cb8",
   "position": {
-    "x": 97.483443708609272,
-    "y": 406.88741721854308,
-    "z": 18000,
+    "x": 0.483443708609272,
+    "y": 0.887417218543078,
+    "z": 0,
     "height": 275.49668874172187,
     "width": 503.31125827814571,
     "tabOrder": 16000
@@ -113,21 +113,21 @@
             "zoom": {
               "expr": {
                 "Literal": {
-                  "Value": "2.17D"
+                  "Value": "0D"
                 }
               }
             },
             "centerLatitude": {
               "expr": {
                 "Literal": {
-                  "Value": "37.398843639369474D"
+                  "Value": "0D"
                 }
               }
             },
             "centerLongitude": {
               "expr": {
                 "Literal": {
-                  "Value": "-96.69430000000001D"
+                  "Value": "0D"
                 }
               }
             },
@@ -801,5 +801,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "parentGroupName": "de14edd0702dbb03e200"
 }

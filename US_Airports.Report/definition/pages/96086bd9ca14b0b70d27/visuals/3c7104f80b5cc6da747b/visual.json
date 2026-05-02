@@ -4,10 +4,10 @@
   "position": {
     "x": 11.871838111298484,
     "y": 261.18043844856663,
-    "z": 22000,
+    "z": 15000,
     "height": 41.011804384485671,
     "width": 49.64586846543002,
-    "tabOrder": 19000
+    "tabOrder": 15000
   },
   "visual": {
     "visualType": "image",
@@ -104,6 +104,42 @@
           },
           "selector": {
             "id": "press"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "visualLink": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'PageNavigation'"
+                }
+              }
+            },
+            "navigationSection": {
+              "expr": {
+                "Literal": {
+                  "Value": "'54a1f9898d0688baeb05'"
+                }
+              }
+            },
+            "tooltip": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Customer Profile'"
+                }
+              }
+            }
           }
         }
       ]

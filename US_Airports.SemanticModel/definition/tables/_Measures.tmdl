@@ -57,9 +57,10 @@ table _Measures
 			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
 			    [Total Revenue] - [Total Revenue QonQ]
 			)
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
 		lineageTag: e60d4ec3-67c9-4597-89fe-5a0c2e919e3c
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
 	measure Departures = COUNT('fact_airline'[Flight Number])
 		formatString: 0
@@ -131,18 +132,16 @@ table _Measures
 			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
 			    [Fuel Cost/Seat] - [Fuel Cost QonQ]
 			)
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
 		lineageTag: b461ff1e-3194-4975-b5e1-0d610fdee5f9
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Gross Profit Q Difference' =
 			IF(
 			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
 			    [Gross Profit] - [Gross Profit QonQ]
 			)
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
 		lineageTag: 210abbf9-ca81-4a1d-bfd3-dac2c4121cfa
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Gross Margin Q Difference' =
 			IF(
@@ -358,6 +357,95 @@ table _Measures
 			)
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: a09357e1-9f39-4580-8020-eeef2dac29cb
+
+	measure 'AVR Ticket Price' = AVERAGE('fact_airline'[Ticket Price])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 060a0267-f474-4ab9-9393-7e0dfba347d0
+
+	measure 'AVR Ancillary Revenue' = AVERAGE('fact_airline'[Ancillary Revenue])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: d63fb5a0-748d-4c06-bb3e-16fadeb904dd
+
+	measure 'AVR Satisfaction Q Difference' =
+			IF(
+			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
+			    [AVR Satisfaction] - [AVR Satisfaction QonQ]
+			)
+		lineageTag: aac95b78-78b4-4a9d-aea4-fb8cf67a8f1a
+
+	measure 'AVR Satisfaction QonQ' = ```
+			CALCULATE(
+			    [AVR Satisfaction], 
+			    PREVIOUSQUARTER('dim_date'[Date])
+			)
+			```
+		lineageTag: 563dd830-3553-410b-8d8a-ce398460b0ac
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVR Satisfaction QonQ %' =
+			DIVIDE(
+			    [AVR Satisfaction Q Difference],
+			    [AVR Satisfaction QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3173e538-0a81-47de-b9b2-81e2c5350978
+
+	measure 'AVR Ticket Price QonQ' = ```
+			CALCULATE(
+			    [AVR Ticket Price], 
+			    PREVIOUSQUARTER('dim_date'[Date])
+			)
+			```
+		lineageTag: bd3fc26e-20ab-4a29-9cf3-483261742684
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVR Ancillary Revenue QonQ' = ```
+			CALCULATE(
+			    [AVR Ancillary Revenue], 
+			    PREVIOUSQUARTER('dim_date'[Date])
+			)
+			```
+		lineageTag: db6d49f8-1e25-403e-9370-621cb547413b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVR Ticket Price Q Difference' =
+			IF(
+			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
+			    [AVR Ticket Price] - [AVR Ticket Price QonQ]
+			)
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
+		lineageTag: c089034b-475e-4175-bd50-7252aa2a536f
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'AVR Ticket Price QonQ %' =
+			DIVIDE(
+			    [AVR Ticket Price Q Difference],
+			    [AVR Ticket Price QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ee42d0f5-6b8a-4d38-825e-0b285d1268df
+
+	measure 'AVR Ancillary Revenue QonQ %' =
+			DIVIDE(
+			    [AVR Ancillary Revenue Q Difference],
+			    [AVR Ancillary Revenue QonQ]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 9a5aa4eb-8657-4359-a45c-8e818c12ebee
+
+	measure 'AVR Ancillary Revenue Q Difference' =
+			IF(
+			    SELECTEDVALUE('dim_date'[Quarter]) = BLANK(), BLANK(),
+			    [AVR Ancillary Revenue] - [AVR Ancillary Revenue QonQ]
+			)
+		formatString: \$#,0.0;(\$#,0.0);\$#,0.0
+		lineageTag: e83c35d5-6703-4bc9-ad8c-43ef919d5810
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
 	column Column
 		isHidden
