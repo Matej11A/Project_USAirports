@@ -20,7 +20,7 @@
                 "name": {
                   "expr": {
                     "Literal": {
-                      "Value": "'revenue.png'"
+                      "Value": "'bar-chart-6-48.png'"
                     }
                   }
                 },
@@ -29,7 +29,7 @@
                     "ResourcePackageItem": {
                       "PackageName": "RegisteredResources",
                       "PackageType": 1,
-                      "ItemName": "revenue6829983935155063.png"
+                      "ItemName": "bar-chart-6-4809511243789425894.png"
                     }
                   }
                 },
@@ -68,7 +68,7 @@
                 "name": {
                   "expr": {
                     "Literal": {
-                      "Value": "'revenue.png'"
+                      "Value": "'bar-chart-6-48.png'"
                     }
                   }
                 },
@@ -77,7 +77,7 @@
                     "ResourcePackageItem": {
                       "PackageName": "RegisteredResources",
                       "PackageType": 1,
-                      "ItemName": "revenue3350605448258207.png"
+                      "ItemName": "bar-chart-6-489938872574615917.png"
                     }
                   }
                 },

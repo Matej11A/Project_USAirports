@@ -1,0 +1,73 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "843315e6da734ab9d008",
+  "position": {
+    "x": 1039.0449954086316,
+    "y": 101.08356290174471,
+    "z": 6000,
+    "height": 79.926538108356283,
+    "width": 205.69329660238751,
+    "tabOrder": 21004
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "500 Customers Analyses",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#999999"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "center"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "All Regions ",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#999999"
+                    }
+                  },
+                  {
+                    "value": " · All Classes",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI, -apple-system, BlinkMacSystemFont, sans-serif",
+                      "fontSize": "10pt",
+                      "color": "#999999"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "center"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

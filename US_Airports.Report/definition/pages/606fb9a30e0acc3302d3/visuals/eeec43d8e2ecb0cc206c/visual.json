@@ -1,0 +1,52 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "eeec43d8e2ecb0cc206c",
+  "position": {
+    "x": 64.646464646464636,
+    "y": 248.00734618916437,
+    "z": 7000,
+    "height": 144.57300275482092,
+    "width": 1027.2910927456383,
+    "tabOrder": 21005
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "This report provides a full-year analysis of airline operational and financial performance across 500 individual customer flights in 2023. It covers revenue distribution by region, customer satisfaction trends, on-time performance, cancellation patterns, and more. Use the buttons below to navigate directly to each section.",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "color": "#555555"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

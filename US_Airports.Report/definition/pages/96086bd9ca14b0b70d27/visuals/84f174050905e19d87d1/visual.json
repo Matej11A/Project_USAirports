@@ -124,6 +124,13 @@
                   "Value": "10D"
                 }
               }
+            },
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
             }
           }
         }
@@ -135,6 +142,13 @@
               "expr": {
                 "Literal": {
                   "Value": "10D"
+                }
+              }
+            },
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -275,7 +289,7 @@
                                   },
                                   "Right": {
                                     "Literal": {
-                                      "Value": "-1D"
+                                      "Value": "-10D"
                                     }
                                   }
                                 }
@@ -346,7 +360,7 @@
                                   },
                                   "Right": {
                                     "Literal": {
-                                      "Value": "1D"
+                                      "Value": "10D"
                                     }
                                   }
                                 }
@@ -423,6 +437,33 @@
               "expr": {
                 "Literal": {
                   "Value": "12D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Current Revenue compared to PQ'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
                 }
               }
             }

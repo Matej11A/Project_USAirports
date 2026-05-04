@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "96086bd9ca14b0b70d27",
-  "displayName": "Home Page",
+  "displayName": "Finance",
   "displayOption": "FitToPage",
   "height": 720,
   "width": 1280,
@@ -77,5 +77,23 @@
         }
       }
     ]
-  }
+  },
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "e0e861932e906a604e9c",
+      "target": "84f174050905e19d87d1",
+      "type": "DataFilter"
+    },
+    {
+      "source": "fbc80bdf383d661ea0b7",
+      "target": "e449099a9bde591c7107",
+      "type": "DataFilter"
+    },
+    {
+      "source": "337537a7abd171ccc112",
+      "target": "dfd2d1646ca0c77680c9",
+      "type": "DataFilter"
+    }
+  ]
 }

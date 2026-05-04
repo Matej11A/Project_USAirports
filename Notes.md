@@ -18,29 +18,20 @@ average fuel cost per flight - 13000*
 - new column: Age Bracket
 *Created custom age brackets to categorise passengers into different age groups to allow for further analysis based on age demographics. The brackets are defined as follows: Under 18, 18-34, 35-49, and 50+.
 ```m
-= Table.AddColumn(#"Changed Type2", "Age Bracket", each if [Passenger Age] < 18 then "Under 18"
-else if [Passenger Age] < 35 then "18-34"
-else if [Passenger Age] < 50 then "35-49"
-else "50+")
+ = Table.AddColumn(#"Changed Type2", "Age Bracket", each if [Passenger Age] < 18 then "Under 18"
+				else if [Passenger Age] < 29 then "18-29"
+				else if [Passenger Age] < 39 then "30-39"
+				else if [Passenger Age] < 49 then "40-49"
+				else if [Passenger Age] < 59 then "50-59"
+				else if [Passenger Age] < 69 then "60-69"
+				else if [Passenger Age] < 79 then "70-79"
+				else "80+"),
 ```
 
 - new column: DateKey
 *Created a DateKey column in the format DD/MM/YYYY to facilitate easier join for dim_Date table in the data model.
 ```m
 = Table.AddColumn(#"Added Custom2", "DateKey", each Date.From([Departure Time]))
-```
-
-- new column: Zone
-*Created a Zone column to categorise airports into different zones based on their geographical location. The zones are defined as follows: West Coast (SEA, SFO, LAX), Central (DEN, DFW), Midwest (ORD, ATL), Southeast (MIA), Northeast (JFK, BOS), and Unknown for any other airports.
-```m
-= Table.AddColumn(#"Renamed Columns", "Zone", each Table.AddColumn(#"Renamed Columns", "Zone", each 
-    if [Origin] = "SEA" or [Origin] = "SFO" or [Origin] = "LAX" then "West Coast"
-    else if [Origin] = "DEN" or [Origin] = "DFW" then "Central"
-    else if [Origin] = "ORD" or [Origin] = "ATL" then "Midwest"
-    else if [Origin] = "MIA" then "Southeast"
-    else if [Origin] = "JFK" or [Origin] = "BOS" then "Northeast"
-    else "Unknown"
-))
 ```
 
 

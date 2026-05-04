@@ -447,6 +447,65 @@ table _Measures
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
+	measure Delayed = ```
+			CALCULATE(
+			    [Departures], 
+			    'fact_airline'[Delay (min)] > 0
+			)
+			```
+		formatString: 0
+		lineageTag: ca68981f-dae5-4871-a0b0-0d16596c6351
+
+	measure 'Cancelled Rate' = ```
+			DIVIDE(
+			    [Cancelled], 
+			    [Departures]
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 733b2e11-a90d-4d8e-893d-7f13350652a4
+
+	measure 'Delayed Rate' =
+			DIVIDE(
+			    [Delayed],
+			    [Departures]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 2eb18626-08ee-4457-b45f-7e5986fc0abc
+
+	measure 'Severaly Delayed Rate' = ```
+			
+			VAR SevDeleayed = CALCULATE(
+			    [Departures],
+			    'fact_airline'[Delay (min)] >= 60
+			)
+			VAR Result = DIVIDE(
+			    SevDeleayed,
+			    [Departures]
+			)
+			Return 
+			    Result
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 5c00230e-cc09-41e5-a48c-6fbf1b553dfd
+
+	measure 'Fuel Cost as % of Revenue' =
+			DIVIDE(
+			    [Fuel Cost/Seat],
+			    [Total Revenue]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 4d2de001-e860-4f41-b51b-b901ce9bc5e9
+
+	measure 'AVR Revenue/Flight' =
+			DIVIDE(
+			    [Total Revenue],
+			    [Departures]
+			)
+		lineageTag: 77ae4559-897c-4bf7-88b3-5de0095a9c85
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Column
 		isHidden
 		formatString: 0
