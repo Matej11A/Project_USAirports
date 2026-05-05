@@ -8,7 +8,8 @@ This is a personal project that analyzes sme of the US airports data. Visuals ar
 
 ## Theme included in files
 
-## Link to the PBI report published on Web:
 
+## Link to the PBI report published on Web:
+https://app.powerbi.com/view?r=eyJrIjoiYTE1MjE5MGQtOWZjYy00YzQyLWI5YjEtMjA2MWM3NjY2OGQyIiwidCI6IjNiMWFhNTk5LTZjZjctNDg5MS1hNDEyLWY2MTY0MmI0ZjQ1NiJ9
 
 
