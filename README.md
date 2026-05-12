@@ -14,5 +14,5 @@ This is a personal project that analyzes sme of the US airports data. Visuals ar
 
 ## [Presentation with findings and recommendations](airline_case_study.pptx)
 
-## [Presentation summary texy](Data_Insights_Summary.md)
+## [Presentation summary text](Data_Insights_Summary.md)
 
